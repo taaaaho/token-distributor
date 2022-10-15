@@ -11,7 +11,30 @@ datasource db {
   url = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
+// Token Allocator
+model TokenAllocator {
+  id          String  @id @default(cuid())
+  owner       String
+  name        String
+  description String
+  contract    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  allocations Allocation[]
+}
 
+model Allocation {
+  id                String  @id @default(cuid())
+  wallet            String
+  proportion        Int
+  tokenAllocator    TokenAllocator @relation(fields: [tokenAllocatorId], references: [id])
+  tokenAllocatorId  String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+
+// Whitelist Manager
 model User {
   id        String  @id @default(cuid())
   name      String?
