@@ -44,8 +44,23 @@ $ pscale database create sandbox --region ap-northeast
 $ pscale connect sandbox develop --port 3309
 $ pscale shell sandbox main
 
-# Migrate (reflect prisma/schema.prisma)
+# Create Deploy Request (like PR)
+$ pscale deploy-request create sandbox develop
+```
+
+## Migration
+
+```
+# Connect PlantScale
+$  pscale connect sandbox develop --port 3309
+
+# Execute (reflect prisma/schema.prisma)
 $ npx prisma db push
 
-pscale deploy-request create sandbox develop
+```
+
+## Prisma GUI Client
+
+```
+$ npx prisma studio
 ```
