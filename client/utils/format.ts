@@ -10,3 +10,14 @@ export const getEllipsisTxt = (str: string, n = 6) => {
   }
   return ''
 }
+
+export const formatDate = (stringDate: string) => {
+  const date = new Date(stringDate)
+  if (date) {
+    return `${date.getFullYear()}/${
+      date.getMonth() + 1
+    }/${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${(
+      '0' + date.getSeconds()
+    ).slice(-2)}`
+  }
+}

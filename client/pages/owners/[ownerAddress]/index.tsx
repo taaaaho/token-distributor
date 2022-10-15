@@ -1,13 +1,12 @@
 import { CommonLayout } from '@/layouts/CommonLayout'
 import { NextPageWithLayout } from '@/pages/_app'
-import { Box } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { ReactElement } from 'react'
-import { Projects } from '@/component/Projects'
+import { TokenAllocators } from '@/component/TokenAllocators'
 
 const User: NextPageWithLayout = () => {
   const router = useRouter()
-  return <Projects />
+  return <TokenAllocators />
 }
 
 User.getLayout = function getLayout(page: ReactElement) {

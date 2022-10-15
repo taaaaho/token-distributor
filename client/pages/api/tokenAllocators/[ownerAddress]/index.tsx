@@ -1,4 +1,4 @@
-import { Project, User } from '@prisma/client'
+import { Project, TokenAllocator, User } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { PrismaClient } from '@prisma/client'
@@ -7,25 +7,21 @@ const prisma = new PrismaClient()
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Project[] | Project>
+  res: NextApiResponse<TokenAllocator[] | TokenAllocator>
 ) {
   const { method } = req
-  const userId = req.query.userId as string
+  const ownerAddress = req.query.ownerAddress as string
   const token = await getToken({ req, raw: true })
 
   if (token) {
     switch (method) {
       case 'GET':
-        const projects = await prisma.project.findMany({
+        const tokenAllocators = await prisma.tokenAllocator.findMany({
           where: {
-            users: {
-              some: {
-                userId: userId,
-              },
-            },
+            owner: ownerAddress,
           },
         })
-        res.status(200).json(projects)
+        res.status(200).json(tokenAllocators)
         break
       default:
         res.setHeader('Allow', ['GET'])
