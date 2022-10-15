@@ -16,7 +16,7 @@ model TokenAllocator {
   id          String  @id @default(cuid())
   owner       String
   name        String
-  description String
+  description String?
   contract    String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

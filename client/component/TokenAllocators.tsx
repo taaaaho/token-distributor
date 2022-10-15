@@ -58,7 +58,11 @@ export const TokenAllocators = () => {
           <Tbody>
             {tokenAllocators.map((tokenAllocators) => (
               <Tr>
-                <Td>{tokenAllocators.id}</Td>
+                <Td>
+                  <Link href={`/owners/${tokenAllocators.owner}`}>
+                    {tokenAllocators.id}
+                  </Link>
+                </Td>
                 <Td>{tokenAllocators.name}</Td>
                 <Td>{tokenAllocators.description}</Td>
                 <Td>{getEllipsisTxt(tokenAllocators.contract)}</Td>

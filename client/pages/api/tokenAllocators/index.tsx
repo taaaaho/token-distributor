@@ -1,4 +1,4 @@
-import { TokenAllocator, User } from '@prisma/client'
+import { Allocation, TokenAllocator, User } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getToken } from 'next-auth/jwt'
 
@@ -20,24 +20,17 @@ export default async function handler(
         res.status(200).json(tokenAllocators)
         break
       case 'POST':
+        const { name, description, owner, contract, allocations } = req.body
+
         const tokenAllocator = await prisma.tokenAllocator.create({
           data: {
-            name: 'hoge',
-            description: 'fuga',
-            owner: '0xD53964fEA76812b4c448357F73c9D08DbA5eBBa7',
-            contract: '0xD53964fEA76812b4c448357F73c9D08DbA5eBBa7',
+            name,
+            description,
+            owner,
+            contract,
             allocations: {
               createMany: {
-                data: [
-                  {
-                    wallet: '0xD53964fEA76812b4c448357F73c9D08DbA5eBB30',
-                    proportion: 30,
-                  },
-                  {
-                    wallet: '0xD53964fEA76812b4c448357F73c9D08DbA5eBB70',
-                    proportion: 70,
-                  },
-                ],
+                data: allocations,
               },
             },
           },

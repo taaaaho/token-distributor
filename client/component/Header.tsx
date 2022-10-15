@@ -2,6 +2,7 @@ import { useMoralisSession } from '@/hooks/useMoralisSession'
 import { getEllipsisTxt } from '@/utils/format'
 import { Box, Button, Flex, HStack, Spacer, Text } from '@chakra-ui/react'
 import { useSession, signOut } from 'next-auth/react'
+import Link from 'next/link'
 import SignIn from './SignIn'
 
 export const Header: React.FC = () => {
@@ -24,9 +25,11 @@ export const Header: React.FC = () => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Text fontWeight="bold" fontSize="2xl" color="white">
-            TOKEN ALLOCATOR
-          </Text>
+          <Link href="/">
+            <Text fontWeight="bold" fontSize="2xl" color="white">
+              TOKEN ALLOCATOR
+            </Text>
+          </Link>
           <Spacer />
           {user ? (
             <>
