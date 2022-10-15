@@ -5,9 +5,11 @@ import { useContext } from 'react'
 
 const Layout = ({ children }: { children: ReactElement }) => {
   return (
-    <Box minH="100vh" position="relative" pt="24">
+    <Box minH="100vh" position="relative" pt="24" bgColor="black">
       <Header />
-      <Box mx="12">{children}</Box>
+      <Box mx="12" color="white">
+        {children}
+      </Box>
     </Box>
   )
 }

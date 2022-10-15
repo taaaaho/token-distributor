@@ -1,14 +1,9 @@
+import { UserInterface } from '@/types/UserInterface'
 import { getSession, GetSessionParams, signOut } from 'next-auth/react'
-import { Context } from 'react'
+import MoralisType from 'moralis-v1'
 
-interface UserInterface {
-  address: string
-  profileId: string
-  expirationTime: string
-  signature: string
-}
 // gets a prop from getServerSideProps
-const User: React.FC<UserInterface> = (user) => {
+const User: React.FC<MoralisType.User> = (user) => {
   return (
     <div>
       <h4>User session:</h4>

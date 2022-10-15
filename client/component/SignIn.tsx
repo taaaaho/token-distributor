@@ -3,13 +3,13 @@ import { signIn } from 'next-auth/react'
 import { useAccount, useConnect, useSignMessage, useDisconnect } from 'wagmi'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import { Box, Button } from '@chakra-ui/react'
 
-function SignIn() {
+const SignIn = () => {
   const { connectAsync } = useConnect()
   const { disconnectAsync } = useDisconnect()
   const { isConnected } = useAccount()
   const { signMessageAsync } = useSignMessage()
-  const { push } = useRouter()
 
   const handleAuth = async () => {
     if (isConnected) {
@@ -21,7 +21,6 @@ function SignIn() {
     })
 
     const userData = { address: account, chain: chain.id, network: 'evm' }
-    console.log(userData)
 
     const { data } = await axios.post('/api/auth/request-message', userData, {
       headers: {
@@ -30,10 +29,8 @@ function SignIn() {
     })
 
     const message = data.message
-    console.log('message', message)
 
     const signature = await signMessageAsync({ message })
-    console.log('signature', signature)
 
     // redirect user after success authentication to '/user' page
     await signIn('credentials', {
@@ -45,14 +42,15 @@ function SignIn() {
      * instead of using signIn(..., redirect: "/user")
      * we get the url from callback and push it to the router to avoid page refreshing
      */
-    push('/user')
+    // push('/user')
   }
 
   return (
-    <div>
-      <h3>Web3 Authentication</h3>
-      <button onClick={() => handleAuth()}>Authenticate via Metamask</button>
-    </div>
+    <Box>
+      <Button size="sm" colorScheme="blue" onClick={() => handleAuth()}>
+        SignIn
+      </Button>
+    </Box>
   )
 }
 

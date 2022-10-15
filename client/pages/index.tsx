@@ -1,18 +1,17 @@
-import { Users } from '@/component/Users'
+import SignIn from '@/component/SignIn'
+import { useMoralisSession } from '@/hooks/useMoralisSession'
 import { CommonLayout } from '@/layouts/CommonLayout'
-import { Box, Button, Center, Text, VStack } from '@chakra-ui/react'
-import type { NextPage } from 'next'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { Center, Text } from '@chakra-ui/react'
 import { ReactElement } from 'react'
 import { NextPageWithLayout } from './_app'
 
 const Home: NextPageWithLayout = () => {
-  const { data: session } = useSession()
+  // const { user } = useMoralisSession()
 
   return (
-    <>
-    <Button colorScheme="purple">Push Me</Button>
-    </>
+    <Center height="100vh">
+      <SignIn />
+    </Center>
   )
 }
 
