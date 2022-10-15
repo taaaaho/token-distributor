@@ -1,47 +1,79 @@
-import NextAuth from 'next-auth'
-import GoogleProvider from 'next-auth/providers/google'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import Moralis from 'moralis'
+import NextAuth, { ISODateString } from 'next-auth'
 
-import { User } from '@prisma/client'
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+export type TUserData = {
+  address: string
+  signature: string
+  profileId: string
+  expirationTime: ISODateString
+}
 
+export interface ISession {
+  user: TUserData
+}
 export default NextAuth({
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
+    CredentialsProvider({
+      name: 'MoralisAuth',
+      credentials: {
+        message: {
+          label: 'Message',
+          type: 'text',
+          placeholder: '0x0',
+        },
+        signature: {
+          label: 'Signature',
+          type: 'text',
+          placeholder: '0x0',
+        },
+      },
+      // @ts-ignore
+      async authorize(credentials, req) {
+        try {
+          const { message, signature } = credentials as Record<string, string>
+
+          await Moralis.start({ apiKey: process.env.MORALIS_API_KEY })
+
+          const { address, profileId, expirationTime, uri } = (
+            await Moralis.Auth.verify({ message, signature, network: 'evm' })
+          ).raw
+          const nextAuthUrl = process.env.NEXTAUTH_URL
+
+          if (uri !== nextAuthUrl) {
+            return null
+          }
+
+          const user = { address, profileId, expirationTime, signature }
+
+          return user
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error(e)
+          return null
+        }
+      },
     }),
   ],
-  session: { strategy: 'jwt' },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      const res = await prisma.user.findUnique({
-        where: {
-          id: user.id,
-        },
-      })
-      if (!res) {
-        await prisma.user.create({
-          data: {
-            id: user.id,
-            name: user.name,
-            email: user.email as string,
-          },
-        })
-      }
-      return true
-    },
-    // Create or update JWT
-    async jwt({ token, user, account }) {
-      if (account) {
-        token.accessToken = account.access_token
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user
       }
       return token
     },
-    // Create or Update session
-    async session({ session, token, user }) {
-      session.accessToken = token.accessToken
+    async session({ session, token }) {
+      session.expires = (token as unknown as ISession).user.expirationTime
+      ;(session as unknown as ISession).user = (
+        token as unknown as ISession
+      ).user
       return session
     },
+  },
+  session: {
+    strategy: 'jwt',
+  },
+  pages: {
+    signIn: '/signin',
   },
 })

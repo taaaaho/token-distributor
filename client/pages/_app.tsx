@@ -1,10 +1,30 @@
 import type { AppProps } from 'next/app'
 import { Session } from 'next-auth'
 import { ChakraProvider } from '@chakra-ui/react'
-import { SessionProvider } from 'next-auth/react'
 import { NextPage } from 'next'
 import { ReactElement, ReactNode } from 'react'
 
+// Authentication
+import {
+  createClient,
+  configureChains,
+  defaultChains,
+  WagmiConfig,
+} from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+import { SessionProvider } from 'next-auth/react'
+
+const { provider, webSocketProvider } = configureChains(defaultChains, [
+  publicProvider(),
+])
+
+const client = createClient({
+  provider,
+  webSocketProvider,
+  autoConnect: true,
+})
+
+// Page Layout
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
 }
@@ -14,6 +34,7 @@ type AppPropsWithLayout = AppProps<{ session: Session }> & {
   session: Session
 }
 
+// Main
 function MyApp({
   Component,
   pageProps: { session, ...pageProps },
@@ -21,9 +42,13 @@ function MyApp({
   const getLayout = Component.getLayout ?? ((page) => page)
 
   return (
-    <SessionProvider session={session}>
-      <ChakraProvider>{getLayout(<Component {...pageProps} />)}</ChakraProvider>
-    </SessionProvider>
+    <WagmiConfig client={client}>
+      <SessionProvider session={session} refetchInterval={0}>
+        <ChakraProvider>
+          {getLayout(<Component {...pageProps} />)}
+        </ChakraProvider>
+      </SessionProvider>
+    </WagmiConfig>
   )
 }
 

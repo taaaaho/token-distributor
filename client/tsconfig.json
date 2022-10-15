@@ -23,7 +23,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/api/users/[userId]"
+    "pages/api/users/[userId]",
+    "pages/api/auth/request-message.js",
+    "pages/api/auth/[...nextauth].js"
   ],
   "exclude": ["node_modules"]
 }
