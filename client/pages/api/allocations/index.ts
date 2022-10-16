@@ -1,4 +1,4 @@
-import { Project, TokenAllocator, User } from '@prisma/client'
+import { TokenAllocator } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { PrismaClient } from '@prisma/client'
@@ -7,21 +7,22 @@ const prisma = new PrismaClient()
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<TokenAllocator[] | TokenAllocator>
+  res: NextApiResponse<TokenAllocator>
 ) {
   const { method } = req
-  const ownerAddress = req.query.ownerAddress as string
+  const tid = req.query.tid as string
   const token = await getToken({ req, raw: true })
 
   if (token) {
     switch (method) {
       case 'GET':
-        const tokenAllocators = await prisma.tokenAllocator.findMany({
-          where: {
-            owner: ownerAddress,
-          },
-        })
-        res.status(200).json(tokenAllocators)
+        const tokenAllocator = await fetchData(tid)
+        if (tokenAllocator) {
+          res.status(200).json(tokenAllocator)
+        } else {
+          res.status(400).end('Not Found')
+        }
+
         break
       default:
         res.setHeader('Allow', ['GET'])
@@ -30,4 +31,16 @@ export default async function handler(
   } else {
     res.status(400).end(`Not Authorized`)
   }
+}
+
+export const fetchData = async (tid: string) => {
+  const tokenAllocator = await prisma.tokenAllocator.findUnique({
+    where: {
+      id: tid,
+    },
+    include: {
+      allocations: true,
+    },
+  })
+  return tokenAllocator
 }

@@ -1,9 +1,8 @@
-import { Allocation, TokenAllocator, User } from '@prisma/client'
+import { TokenAllocator } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getToken } from 'next-auth/jwt'
 
 import { PrismaClient } from '@prisma/client'
-import { getCsrfToken, getProviders } from 'next-auth/react'
 const prisma = new PrismaClient()
 
 export default async function handler(

@@ -128,7 +128,7 @@ export const NewTokenAllocators = () => {
     return <Loading />
   }
   return (
-    <Stack w="90%">
+    <Stack>
       <FormControl isRequired isInvalid={isNameError}>
         <FormLabel>Name</FormLabel>
         <Input

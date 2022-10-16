@@ -36,10 +36,13 @@ export const TokenAllocators = () => {
   }
 
   return (
-    <Box w="90%">
+    <Box w="100%">
       <HStack justifyContent="space-between">
         <Button colorScheme="purple" onClick={fetchTokenAllocators}>
           Fetch
+        </Button>
+        <Button colorScheme="purple" onClick={() => router.push('/new')}>
+          New
         </Button>
       </HStack>
       <TableContainer w="100%">
@@ -57,9 +60,9 @@ export const TokenAllocators = () => {
           </Thead>
           <Tbody>
             {tokenAllocators.map((tokenAllocators) => (
-              <Tr>
+              <Tr key={tokenAllocators.id}>
                 <Td>
-                  <Link href={`/owners/${tokenAllocators.owner}`}>
+                  <Link href={`/${tokenAllocators.id}`}>
                     {tokenAllocators.id}
                   </Link>
                 </Td>
