@@ -25,8 +25,8 @@ const client = createClient({
 })
 
 // Page Layout
-export type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactElement
 }
 
 type AppPropsWithLayout = AppProps<{ session: Session }> & {
