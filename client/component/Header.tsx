@@ -18,6 +18,7 @@ export const Header: React.FC = () => {
       px={{ base: '2', md: '8' }}
       justifyContent="space-between"
       bgColor="black"
+      zIndex={1}
     >
       <Box width="100vw">
         <HStack
@@ -26,16 +27,18 @@ export const Header: React.FC = () => {
           justifyContent="space-between"
         >
           <Link href="/">
-            <Text fontWeight="bold" fontSize="2xl" color="white">
+            <Text
+              fontWeight="bold"
+              fontSize={{ base: 'xl', md: '2xl' }}
+              color="white"
+            >
               TOKEN ALLOCATOR
             </Text>
           </Link>
           <Spacer />
           {user ? (
             <>
-              <Text pr="4" color="white">
-                {getEllipsisTxt(user.address)}
-              </Text>
+              <Text color="white">{getEllipsisTxt(user.address)}</Text>
               <Button
                 size="sm"
                 colorScheme="purple"
@@ -49,23 +52,6 @@ export const Header: React.FC = () => {
           )}
         </HStack>
       </Box>
-
-      {/* <Box
-        bg="gray.800"
-        borderRadius="xl"
-        m="2"
-        px="3"
-        py="2"
-        display={{ base: 'none', md: 'block' }}
-      >
-        <Text
-          fontWeight="semibold"
-          fontSize={{ base: 'xs', md: 'sm' }}
-          color="white"
-        >
-          Connect Wallet
-        </Text>
-      </Box> */}
     </Flex>
   )
 }

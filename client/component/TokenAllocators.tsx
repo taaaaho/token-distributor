@@ -36,7 +36,7 @@ export const TokenAllocators = () => {
   }
 
   return (
-    <Box w="100%">
+    <Box w="100vw" px={4}>
       <HStack justifyContent="space-between">
         <Button colorScheme="purple" onClick={fetchTokenAllocators}>
           Fetch
