@@ -128,7 +128,7 @@ export const NewTokenAllocators = () => {
     return <Loading />
   }
   return (
-    <Stack>
+    <Stack w="100%" px={{ base: 4, md: 12 }}>
       <FormControl isRequired isInvalid={isNameError}>
         <FormLabel>Name</FormLabel>
         <Input
@@ -155,7 +155,7 @@ export const NewTokenAllocators = () => {
         />
       ))}
       <HStack justifyContent="space-between" alignItems="flex-start" mt="4">
-        <Button colorScheme="purple" onClick={addAlocation}>
+        <Button colorScheme="purple" onClick={addAlocation} w="200px">
           Add Allocation
         </Button>
         <FormControl

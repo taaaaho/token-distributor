@@ -24,19 +24,21 @@ import {
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { formatDate, getEllipsisTxt } from '@/utils/format'
+import { useMoralisSession } from '@/hooks/useMoralisSession'
 
 export const TokenAllocators = () => {
+  const { user } = useMoralisSession()
   const router = useRouter()
   const [tokenAllocators, setTokenAllocators] = useState<TokenAllocator[]>([])
   const fetchTokenAllocators = async () => {
     const res = await axios.get<TokenAllocator[]>(
-      `${window.origin}/api/tokenAllocators/0xD53964fEA76812b4c448357F73c9D08DbA5eBBa7`
+      `${window.origin}/api/tokenAllocators/${user.address}`
     )
     setTokenAllocators(res.data)
   }
 
   return (
-    <Box w="100vw" px={4}>
+    <Box w="100%" px={{ base: 4, md: 12 }}>
       <HStack justifyContent="space-between">
         <Button colorScheme="purple" onClick={fetchTokenAllocators}>
           Fetch
@@ -45,37 +47,44 @@ export const TokenAllocators = () => {
           New
         </Button>
       </HStack>
-      <TableContainer w="100%">
-        <Table variant="simple">
-          <TableCaption>Imperial to metric conversion factors</TableCaption>
-          <Thead>
-            <Tr>
-              <Th>ID</Th>
-              <Th>Name</Th>
-              <Th>Desctiption</Th>
-              <Th>Contract</Th>
-              <Th>CreatedAt</Th>
-              <Th>UpdatedAt</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {tokenAllocators.map((tokenAllocators) => (
-              <Tr key={tokenAllocators.id}>
-                <Td>
-                  <Link href={`/${tokenAllocators.id}`}>
-                    {tokenAllocators.id}
-                  </Link>
-                </Td>
-                <Td>{tokenAllocators.name}</Td>
-                <Td>{tokenAllocators.description}</Td>
-                <Td>{getEllipsisTxt(tokenAllocators.contract)}</Td>
-                <Td>{formatDate(tokenAllocators.createdAt.toString())}</Td>
-                <Td>{formatDate(tokenAllocators.updatedAt.toString())}</Td>
+      {tokenAllocators.length > 0 ? (
+        <TableContainer w="100%">
+          <Table variant="simple">
+            <TableCaption>Allocation Contracts</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>ID</Th>
+                <Th>Name</Th>
+                <Th>Desctiption</Th>
+                <Th>Contract</Th>
+                <Th>CreatedAt</Th>
+                <Th>UpdatedAt</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+            </Thead>
+            <Tbody>
+              {tokenAllocators.map((tokenAllocators) => (
+                <Tr key={tokenAllocators.id}>
+                  <Td>
+                    <Link href={`/${tokenAllocators.id}`}>
+                      {tokenAllocators.id}
+                    </Link>
+                  </Td>
+                  <Td>{tokenAllocators.name}</Td>
+                  <Td>{tokenAllocators.description}</Td>
+                  <Td>{getEllipsisTxt(tokenAllocators.contract)}</Td>
+                  <Td>{formatDate(tokenAllocators.createdAt.toString())}</Td>
+                  <Td>{formatDate(tokenAllocators.updatedAt.toString())}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Box mt={4}>
+          <Text>There are no data... </Text>
+          <Text>Please fetch or create contracts.</Text>
+        </Box>
+      )}
     </Box>
   )
 }
