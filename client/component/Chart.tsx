@@ -42,7 +42,7 @@ const Chart: React.FC<Props> = (props): JSX.Element => {
           cx="50%"
           cy="50%"
           labelLine={true}
-          outerRadius={90}
+          outerRadius={71}
           fill="#8884d8"
           nameKey="wallet"
           dataKey="proportion"
