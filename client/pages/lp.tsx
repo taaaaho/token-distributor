@@ -12,6 +12,7 @@ import Image from 'next/image'
 import { ReactElement } from 'react'
 import { NextPageWithLayout } from './_app'
 import AllocationImage from '../public/LP/Allocations_edit.png'
+import Link from 'next/link'
 
 const Home: NextPageWithLayout = () => {
   return (
@@ -110,7 +111,7 @@ const Home: NextPageWithLayout = () => {
             px={12}
             py={8}
           >
-            Launch App
+            <Link href="https://app.token-distributor.xyz/">Launch App</Link>
           </Button>
         </HStack>
       </VStack>

@@ -29,7 +29,7 @@ const Layout = ({ children }: { children: ReactElement }) => {
             TOKEN DISTRIBUTOR
           </Text>
           <Button color="#010101" size="md">
-            Launch App
+            <Link href="https://app.token-distributor.xyz/">Launch App</Link>
           </Button>
         </HStack>
         <Box
