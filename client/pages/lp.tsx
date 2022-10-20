@@ -77,6 +77,7 @@ const Home: NextPageWithLayout = () => {
               src={AllocationImage}
               width={(614 * 2) / 3}
               height={(386 * 2) / 3}
+              alt="Allocation image"
             ></Image>
           </Center>
           <Box
