@@ -13,7 +13,7 @@ export default function middleware(req: {
   //   if (pathname.startsWith(`/lp`)) {
   //     return new Response(null, { status: 404 });
   //   }
-  if (subdomain === 'app') {
+  if (subdomain == 'app') {
     // To App
     return NextResponse.rewrite(`${origin}${pathname}${search}`)
   }
