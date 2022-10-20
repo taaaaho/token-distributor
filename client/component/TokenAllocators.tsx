@@ -40,10 +40,10 @@ export const TokenAllocators = () => {
   return (
     <Box w="100%" px={{ base: 4, md: 12 }}>
       <HStack justifyContent="space-between">
-        <Button colorScheme="purple" onClick={fetchTokenAllocators}>
+        <Button color="#010101" onClick={fetchTokenAllocators}>
           Fetch
         </Button>
-        <Button colorScheme="purple" onClick={() => router.push('/new')}>
+        <Button color="#010101" onClick={() => router.push('/new')}>
           New
         </Button>
       </HStack>

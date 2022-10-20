@@ -15,7 +15,7 @@ import AllocationImage from '../public/LP/Allocations_edit.png'
 
 const Home: NextPageWithLayout = () => {
   return (
-    <Center h="100vh" w="100vw" alignItems="start">
+    <Center h="100vh" w="100vw" alignItems="start" mt={{ base: 16, md: 0 }}>
       <VStack w="100vw" gap={12}>
         <Box
           w="80%"
@@ -89,25 +89,28 @@ const Home: NextPageWithLayout = () => {
             <Text fontSize={22} fontWeight="semibold">
               Confirmation Allocations with GUI
             </Text>
-            <Text fontSize={16}>
-              Distribution can be easily configured and contracts can be
-              deployed on the GUI. Configuration values can be easily checked on
-              the GUI without having to look at the contract.
+            <Text fontSize={18} mt={4}>
+              Token distribution can be easily done via the web.
+              <br />
+              Visual confirmation of ratios without looking at the contract
             </Text>
           </Box>
         </Stack>
         <HStack
           w={{ base: '90%', md: '70%' }}
           h={{ base: '100px', md: '150px' }}
-          bgColor="blackAlpha.600"
+          // bgColor="blackAlpha.600"
           borderRadius="2xl"
           justifyContent="center"
         >
-          <Text w="30%" fontWeight="bold" fontSize={{ base: 18, md: 36 }}>
-            Try For Free
-          </Text>
-          <Button bgColor="black" color="white" size={{ base: 'md', md: 'lg' }}>
-            Launch App →
+          <Button
+            // bgColor="blackAlpha.700"
+            color="#010101"
+            fontSize="2xl"
+            px={12}
+            py={8}
+          >
+            Launch App
           </Button>
         </HStack>
       </VStack>

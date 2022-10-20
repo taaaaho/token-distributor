@@ -4,7 +4,7 @@ import type { ReactElement } from 'react'
 
 const Layout = ({ children }: { children: ReactElement }) => {
   return (
-    <Box minH="100vh" position="relative" pt="24" bgColor="black">
+    <Box minH="100vh" pt="24" bgColor="black">
       <Header />
       <Box color="white">{children}</Box>
     </Box>

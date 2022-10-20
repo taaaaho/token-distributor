@@ -119,6 +119,7 @@ export const NewTokenAllocators = () => {
         `${window.origin}/api/tokenAllocators`,
         data
       )
+      setAllocations([])
     } finally {
       setIsLoading(false)
     }
@@ -155,7 +156,7 @@ export const NewTokenAllocators = () => {
         />
       ))}
       <HStack justifyContent="space-between" alignItems="flex-start" mt="4">
-        <Button colorScheme="purple" onClick={addAlocation} w="200px">
+        <Button color="#010101" onClick={addAlocation} w="200px">
           Add Allocation
         </Button>
         <FormControl
@@ -163,7 +164,7 @@ export const NewTokenAllocators = () => {
           textAlign="right"
         >
           <Button
-            colorScheme="purple"
+            color="#010101"
             onClick={postTokenAllocators}
             textAlign="right"
           >

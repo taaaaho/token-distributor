@@ -15,7 +15,7 @@ export const Header: React.FC = () => {
       width="100vw"
       top="0"
       py="3"
-      px={{ base: '2', md: '8' }}
+      px={{ base: '4', md: '8' }}
       justifyContent="space-between"
       bgColor="black"
       zIndex={1}
@@ -32,23 +32,23 @@ export const Header: React.FC = () => {
               fontSize={{ base: 'xl', md: '2xl' }}
               color="white"
             >
-              TOKEN ALLOCATOR
+              TOKEN DISTRIBUTOR
             </Text>
           </Link>
           <Spacer />
           {user ? (
             <>
-              <Text color="white">{getEllipsisTxt(user.address)}</Text>
+              <Text color="white">{getEllipsisTxt(user.address, 4)}</Text>
               <Button
                 size="sm"
-                colorScheme="purple"
+                color="#010101"
                 onClick={() => signOut({ redirect: false })}
               >
-                Sign out
+                SignOut
               </Button>
             </>
           ) : (
-            <SignIn />
+            <SignIn buttonSize="md" />
           )}
         </HStack>
       </Box>

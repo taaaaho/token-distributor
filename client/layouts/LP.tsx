@@ -1,9 +1,10 @@
 import { Box, Button, Center, HStack, Text } from '@chakra-ui/react'
+import Link from 'next/link'
 import type { ReactElement } from 'react'
 
 const Layout = ({ children }: { children: ReactElement }) => {
   return (
-    <Box minH="100%" position="relative" pt={20} bgColor="black">
+    <Box minH="100%" position="relative" pt={18} bgColor="black">
       <Box
         backgroundImage={'LP/back.jpg'}
         backgroundPosition="center"
@@ -17,22 +18,22 @@ const Layout = ({ children }: { children: ReactElement }) => {
           py="4"
           px={{ base: '6', md: '10' }}
           justifyContent="space-between"
-          bgColor="black"
+          bgColor="#010101"
           zIndex={1}
         >
           <Text
             fontWeight="bold"
             fontSize={{ base: 'xl', md: '2xl' }}
-            color="white"
+            color="#fafafa"
           >
             TOKEN DISTRIBUTOR
           </Text>
-          <Button bgColor="black" size="md" color="white">
+          <Button color="#010101" size="md">
             Launch App
           </Button>
         </HStack>
         <Box
-          color="white"
+          color="#fafafa"
           bg="rgba(0,0,0,0.5)"
           pt={6}
           pb={{ base: 24, md: 96 }}
@@ -43,11 +44,15 @@ const Layout = ({ children }: { children: ReactElement }) => {
       <Center
         width="100%"
         bottom="0"
-        bgColor="blackAlpha.900"
+        bgColor="#010101"
         height="60px"
-        color="white"
+        color="#fafafa"
       >
-        © 2022 Crypto INU
+        <HStack>
+          <Text>Copyright © 2022</Text>
+          <Link href="https://twitter.com/crypto_inuuu">{` Crypto INU `}</Link>
+          <Text>All rights reserved.</Text>
+        </HStack>
       </Center>
     </Box>
   )
