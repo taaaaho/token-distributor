@@ -16,10 +16,12 @@ import {
 import Link from 'next/link'
 import { formatDate, getEllipsisTxt } from '@/utils/format'
 import { useMoralisSession } from '@/hooks/useMoralisSession'
+import { Loading } from './Loading'
 
 export const TokenAllocators = () => {
   const { user } = useMoralisSession()
   const [tokenAllocators, setTokenAllocators] = useState<TokenAllocator[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const fetchTokenAllocators = async () => {
     const res = await axios.get<TokenAllocator[]>(
       `${window.origin}/api/tokenAllocators/${user.address}`
@@ -30,7 +32,12 @@ export const TokenAllocators = () => {
   return (
     <Box w="100%" px={{ base: 4, md: 12 }}>
       <HStack justifyContent="space-between">
-        <Button color="#010101" onClick={fetchTokenAllocators}>
+        <Button
+          color="#010101"
+          onClick={fetchTokenAllocators}
+          isLoading={isLoading}
+          isDisabled={isLoading}
+        >
           Fetch
         </Button>
         <Button color="#010101">
@@ -69,6 +76,8 @@ export const TokenAllocators = () => {
             </Tbody>
           </Table>
         </TableContainer>
+      ) : isLoading ? (
+        <Loading />
       ) : (
         <Box mt={4}>
           <Text>There are no data... </Text>
