@@ -1,18 +1,8 @@
 import { useMoralisSession } from '@/hooks/useMoralisSession'
 import { capitalize, getEllipsisTxt } from '@/utils/format'
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Spacer,
-  Text,
-  VStack,
-} from '@chakra-ui/react'
-import { useSession, signOut } from 'next-auth/react'
+import { Box, Button, HStack, Text } from '@chakra-ui/react'
+import { signOut } from 'next-auth/react'
 import Image from 'next/image'
-import Link from 'next/link'
-import SignIn from './SignIn'
 
 import { ChevronDownIcon } from '@chakra-ui/icons'
 
@@ -22,10 +12,8 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverBody,
-  PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  PopoverAnchor,
 } from '@chakra-ui/react'
 
 import {
@@ -33,32 +21,17 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
   MenuDivider,
 } from '@chakra-ui/react'
 import { ethers } from 'ethers'
-import { useEffect, useState } from 'react'
-import { AddEthereumChainParameter } from '@/types/Chain'
-
-const PolygonMain = {
-  chainId: '0x89', // A 0x-prefixed hexadecimal string
-  chainName: 'Matic(Poygon) Mainnet',
-  nativeCurrency: {
-    name: 'MATIC',
-    symbol: 'MATIC', // 2-6 characters long
-    decimals: 18,
-  },
-  rpcUrls: ['https://rpc-mainnet.maticvigil.com/'],
-  blockExplorerUrls: ['https://polygonscan.com/'],
-}
-interface keyObject {
-  string: AddEthereumChainParameter
-}
-const chainList = {
-  '0x89': PolygonMain,
-}
+import { useCallback, useEffect, useState } from 'react'
+import {
+  CHAIN_LIST,
+  ETHERIUM_CHAIN_ID,
+  GOERLI_CHAIN_ID,
+  MATIC_CHAIN_ID,
+  MATIC_TEST_CHAIN_ID,
+} from '@/types/Chain'
 
 export const WalletMenu: React.FC = () => {
   const { user } = useMoralisSession()
@@ -67,7 +40,6 @@ export const WalletMenu: React.FC = () => {
   const [balance, setBalance] = useState<string>()
 
   const changeNetwork = async (chainId: string) => {
-    console.log(provider)
     if (provider) {
       try {
         await provider.send('wallet_switchEthereumChain', [
@@ -77,7 +49,10 @@ export const WalletMenu: React.FC = () => {
         // This error code indicates that the chain has not been added to MetaMask.
         if (switchError.code === 4902) {
           try {
-            await provider.send('wallet_addEthereumChain', [chainList[chainId]])
+            await provider.send('wallet_addEthereumChain', [
+              // @ts-ignore
+              CHAIN_LIST[chainId],
+            ])
           } catch (addError) {
             console.error(addError)
             // handle "add" error
@@ -88,7 +63,7 @@ export const WalletMenu: React.FC = () => {
     }
   }
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (provider) {
       const network = await provider.getNetwork()
       setNetwork(network.name)
@@ -98,7 +73,8 @@ export const WalletMenu: React.FC = () => {
         setBalance(ethers.utils.formatEther(balance))
       }
     }
-  }
+  }, [provider, user])
+
   useEffect(() => {
     const prov = new ethers.providers.Web3Provider(
       (window as any).ethereum,
@@ -110,7 +86,7 @@ export const WalletMenu: React.FC = () => {
     if (provider) {
       fetchData()
     }
-  }, [provider])
+  }, [fetchData, provider])
 
   return (
     <>
@@ -138,7 +114,7 @@ export const WalletMenu: React.FC = () => {
               </HStack>
             </PopoverHeader>
             <PopoverBody>
-              {/* <Box>
+              <Box>
                 <Menu>
                   <MenuButton
                     as={Button}
@@ -155,14 +131,14 @@ export const WalletMenu: React.FC = () => {
                     </Text>
                     <MenuItem
                       onClick={() => {
-                        changeNetwork('0x1')
+                        changeNetwork(ETHERIUM_CHAIN_ID)
                       }}
                     >
                       Etherium
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
-                        changeNetwork('0x89')
+                        changeNetwork(MATIC_CHAIN_ID)
                       }}
                     >
                       Polygon
@@ -173,21 +149,21 @@ export const WalletMenu: React.FC = () => {
                     </Text>
                     <MenuItem
                       onClick={() => {
-                        changeNetwork('0x5')
+                        changeNetwork(GOERLI_CHAIN_ID)
                       }}
                     >
                       Goerli
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
-                        changeNetwork('0x13881')
+                        changeNetwork(MATIC_TEST_CHAIN_ID)
                       }}
                     >
                       Mumbai
                     </MenuItem>
                   </MenuList>
                 </Menu>
-              </Box> */}
+              </Box>
               <Button
                 mt={2}
                 size="sm"
