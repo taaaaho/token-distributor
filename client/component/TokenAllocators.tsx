@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import {
-  Box,
-  Button,
-  HStack,
-  Input,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { Box, Button, HStack, Text } from '@chakra-ui/react'
 import axios from 'axios'
-import { User, TokenAllocator } from '@prisma/client'
+import { TokenAllocator } from '@prisma/client'
 
 import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -22,13 +14,11 @@ import {
   TableContainer,
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { formatDate, getEllipsisTxt } from '@/utils/format'
 import { useMoralisSession } from '@/hooks/useMoralisSession'
 
 export const TokenAllocators = () => {
   const { user } = useMoralisSession()
-  const router = useRouter()
   const [tokenAllocators, setTokenAllocators] = useState<TokenAllocator[]>([])
   const fetchTokenAllocators = async () => {
     const res = await axios.get<TokenAllocator[]>(
@@ -43,8 +33,8 @@ export const TokenAllocators = () => {
         <Button color="#010101" onClick={fetchTokenAllocators}>
           Fetch
         </Button>
-        <Button color="#010101" onClick={() => router.push('/new')}>
-          New
+        <Button color="#010101">
+          <Link href="/new">New</Link>
         </Button>
       </HStack>
       {tokenAllocators.length > 0 ? (

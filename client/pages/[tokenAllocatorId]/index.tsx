@@ -24,14 +24,30 @@ HOME.getLayout = function getLayout(page: ReactElement) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context)
-  const tid = context.params?.tokenAllocatorId as string
-  let data
-  // if (session && tid) {
-  data = await fetchData(tid)
-  // }
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
 
-  return {
-    props: { data: JSON.stringify(data) },
+  const tid = context.params?.tokenAllocatorId as string
+  const data = await fetchData(tid)
+
+  if (data) {
+    return {
+      props: { data: JSON.stringify(data) },
+    }
+  } else {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+      props: {} as never,
+    }
   }
 }
 
