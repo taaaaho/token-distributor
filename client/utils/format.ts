@@ -25,3 +25,8 @@ export const formatDate = (stringDate: string) => {
 const zeroPadding = (str: number) => {
   return ('0' + str).slice(-2)
 }
+
+export const capitalize = (str: string | undefined) => {
+  if (!str || str == undefined) return str
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+}
