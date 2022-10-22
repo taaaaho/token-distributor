@@ -1,12 +1,12 @@
 import { useMoralisSession } from '@/hooks/useMoralisSession'
-import { getEllipsisTxt } from '@/utils/format'
-import { Box, Button, Flex, HStack, Spacer, Text } from '@chakra-ui/react'
-import { useSession, signOut } from 'next-auth/react'
+import { Box, Flex, Spacer, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import SignIn from './SignIn'
+import { WalletMenu } from './WalletMenu'
 
 export const Header: React.FC = () => {
   const { user } = useMoralisSession()
+
   return (
     <Flex
       flexDirection="row"
@@ -21,7 +21,7 @@ export const Header: React.FC = () => {
       zIndex={1}
     >
       <Box width="100vw">
-        <HStack
+        <Flex
           flexDirection="row"
           alignItems="center"
           justifyContent="space-between"
@@ -38,19 +38,12 @@ export const Header: React.FC = () => {
           <Spacer />
           {user ? (
             <>
-              <Text color="white">{getEllipsisTxt(user.address, 4)}</Text>
-              <Button
-                size="sm"
-                color="#010101"
-                onClick={() => signOut({ redirect: false })}
-              >
-                SignOut
-              </Button>
+              <WalletMenu />
             </>
           ) : (
             <SignIn buttonSize="md" />
           )}
-        </HStack>
+        </Flex>
       </Box>
     </Flex>
   )
