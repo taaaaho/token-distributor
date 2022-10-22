@@ -26,9 +26,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context)
   const tid = context.params?.tokenAllocatorId as string
   let data
-  if (session && tid) {
-    data = await fetchData(tid)
-  }
+  // if (session && tid) {
+  data = await fetchData(tid)
+  // }
 
   return {
     props: { data: JSON.stringify(data) },
