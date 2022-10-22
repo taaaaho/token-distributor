@@ -82,6 +82,7 @@ export const NewTokenAllocators = () => {
         (window as any).ethereum,
         'any'
       )
+
       const signer = provider.getSigner()
       const factory = new ethers.ContractFactory(
         artifact.abi,
@@ -105,12 +106,14 @@ export const NewTokenAllocators = () => {
       let contract = await factory.deploy(argsWallets, argsProportions)
       const cont = await contract.deployed()
 
+      const network = await provider.getNetwork()
       // @ts-ignore
       allocations.map((allocation) => delete allocation.id)
       // create data
       const data = {
         name,
         description,
+        network: network.name,
         owner: user.address,
         contract: contract.address,
         allocations,

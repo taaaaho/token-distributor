@@ -15,6 +15,7 @@ datasource db {
 model TokenAllocator {
   id          String  @id @default(cuid())
   owner       String
+  network     String
   name        String
   description String?
   contract    String
