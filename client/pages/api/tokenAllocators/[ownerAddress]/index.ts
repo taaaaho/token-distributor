@@ -1,9 +1,8 @@
 import { TokenAllocator } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { PrismaClient } from '@prisma/client'
 import { getToken } from 'next-auth/jwt'
-const prisma = new PrismaClient()
+import prisma from '@/helpers/api/prisma'
 
 export default async function handler(
   req: NextApiRequest,
