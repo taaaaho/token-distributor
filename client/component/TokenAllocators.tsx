@@ -40,9 +40,9 @@ export const TokenAllocators = () => {
         >
           Fetch
         </Button>
-        <Button color="#010101">
-          <Link href="/new">New</Link>
-        </Button>
+        <Link href="/tokenAllocator/new">
+          <Button color="#010101">New</Button>
+        </Link>
       </HStack>
       {tokenAllocators.length > 0 ? (
         <TableContainer w="100%">
