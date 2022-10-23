@@ -28,5 +28,6 @@ const zeroPadding = (str: number) => {
 
 export const capitalize = (str: string | undefined) => {
   if (!str || str == undefined) return str
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+  const tempStr = str.replaceAll('homestead', 'Ethereum')
+  return tempStr.charAt(0).toUpperCase() + tempStr.slice(1).toLowerCase()
 }
