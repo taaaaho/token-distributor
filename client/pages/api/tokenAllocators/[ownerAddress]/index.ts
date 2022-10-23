@@ -12,8 +12,6 @@ export default async function handler(
   const ownerAddress = req.query.ownerAddress as string
   const token = await getToken({ req, raw: true })
 
-  console.log('ownerAddress', ownerAddress)
-  console.log('token', token)
   if (token) {
     switch (method) {
       case 'GET':

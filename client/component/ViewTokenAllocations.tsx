@@ -14,8 +14,11 @@ import {
 
 import { FormControl, FormLabel } from '@chakra-ui/react'
 import { Allocation, TokenAllocator } from '@prisma/client'
-import { formatDate } from '@/utils/format'
+import { capitalize, formatDate } from '@/utils/format'
 import Chart from './Chart'
+import { copyTextToClipboard } from '@/utils/copy'
+import { CopyIcon } from '@chakra-ui/icons'
+import { useToaster } from '@/hooks/useToaster'
 
 interface Props {
   tokenAllocator:
@@ -26,10 +29,14 @@ interface Props {
 
 export const ViewTokenAllocations: React.FC<Props> = (props) => {
   const { tokenAllocator } = props
-  const [windowWidth, setwindowWidth] = useState(0)
+  const { infoToast } = useToaster()
 
   return (
     <Stack gap={2} px={8} pb={16}>
+      <FormControl>
+        <FormLabel>ID</FormLabel>
+        <Input defaultValue={tokenAllocator.id} disabled={true} />
+      </FormControl>
       <FormControl>
         <FormLabel>Name</FormLabel>
         <Input defaultValue={tokenAllocator.name} disabled={true} />
@@ -44,8 +51,32 @@ export const ViewTokenAllocations: React.FC<Props> = (props) => {
         />
       </FormControl>
       <FormControl>
-        <FormLabel>Contract Address</FormLabel>
-        <Input defaultValue={tokenAllocator.contract} disabled={true} />
+        <FormLabel>Network</FormLabel>
+        <Input
+          defaultValue={
+            tokenAllocator.network ? capitalize(tokenAllocator.network) : ''
+          }
+          disabled={true}
+        />
+      </FormControl>
+      <FormControl>
+        <FormLabel
+          cursor="pointer"
+          onClick={async () => {
+            const res = await copyTextToClipboard(tokenAllocator.contract)
+            if (res) {
+              infoToast('Copied!')
+            }
+          }}
+        >
+          Contract Address
+          <CopyIcon />
+        </FormLabel>
+        <Input
+          defaultValue={tokenAllocator.contract}
+          disabled={true}
+          color="white"
+        />
       </FormControl>
       <FormControl>
         <FormLabel>Created At</FormLabel>

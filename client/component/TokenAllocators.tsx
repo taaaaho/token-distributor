@@ -50,28 +50,24 @@ export const TokenAllocators = () => {
             <TableCaption>Allocation Contracts</TableCaption>
             <Thead>
               <Tr>
-                <Th>ID</Th>
                 <Th>Name</Th>
                 <Th>Desctiption</Th>
+                <Th>Network</Th>
                 <Th>Contract</Th>
                 <Th>CreatedAt</Th>
-                <Th>UpdatedAt</Th>
               </Tr>
             </Thead>
             <Tbody>
               {tokenAllocators.map((tokenAllocators) => (
-                <Tr key={tokenAllocators.id}>
-                  <Td>
-                    <Link href={`/${tokenAllocators.id}`}>
-                      {tokenAllocators.id}
-                    </Link>
-                  </Td>
-                  <Td>{tokenAllocators.name}</Td>
-                  <Td>{tokenAllocators.description}</Td>
-                  <Td>{getEllipsisTxt(tokenAllocators.contract)}</Td>
-                  <Td>{formatDate(tokenAllocators.createdAt.toString())}</Td>
-                  <Td>{formatDate(tokenAllocators.updatedAt.toString())}</Td>
-                </Tr>
+                <Link href={`/${tokenAllocators.id}`} key={tokenAllocators.id}>
+                  <Tr cursor="pointer">
+                    <Td>{tokenAllocators.name}</Td>
+                    <Td>{tokenAllocators.description}</Td>
+                    <Td>{tokenAllocators.network}</Td>
+                    <Td>{getEllipsisTxt(tokenAllocators.contract)}</Td>
+                    <Td>{formatDate(tokenAllocators.createdAt.toString())}</Td>
+                  </Tr>
+                </Link>
               ))}
             </Tbody>
           </Table>
