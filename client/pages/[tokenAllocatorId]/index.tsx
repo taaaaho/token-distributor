@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react'
 import { ViewTokenAllocations } from '@/component/ViewTokenAllocations'
 import { GetServerSideProps } from 'next'
 import { fetchData } from '../api/allocations'
-import { getSession } from 'next-auth/react'
+// import { getSession } from 'next-auth/react'
 import { Allocation, TokenAllocator } from '@prisma/client'
 
 interface Props {
@@ -23,15 +23,15 @@ HOME.getLayout = function getLayout(page: ReactElement) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context)
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
-  }
+  // const session = await getSession(context)
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: '/',
+  //       permanent: false,
+  //     },
+  //   }
+  // }
 
   const tid = context.params?.tokenAllocatorId as string
   const data = await fetchData(tid)
