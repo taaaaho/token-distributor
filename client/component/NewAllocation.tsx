@@ -19,12 +19,13 @@ interface Props {
   ind: number
   seq: string
   allocations: Pick<Allocation, 'id' | 'wallet' | 'proportion'>[]
+  deleteAllocation: (deleteId: string) => void
   setAllocations: React.Dispatch<
     React.SetStateAction<Pick<Allocation, 'id' | 'wallet' | 'proportion'>[]>
   >
 }
 export const NewAllocation: React.FC<Props> = (props) => {
-  const { ind, seq, allocations, setAllocations } = props
+  const { ind, seq, allocations, setAllocations, deleteAllocation } = props
   const [wallet, setWallet] = useState<string>('')
   const [proportion, setProportion] = useState<number>(1)
 
@@ -33,7 +34,7 @@ export const NewAllocation: React.FC<Props> = (props) => {
     useState<boolean>(false)
 
   const handledeleteAllocation = () => {
-    setAllocations(allocations.filter((allo) => allo.id !== seq))
+    deleteAllocation(seq)
   }
   useEffect(() => {
     setIsInvalidAddressError(false)
@@ -45,8 +46,9 @@ export const NewAllocation: React.FC<Props> = (props) => {
       setIsInvalidAddressError(true)
     }
     if (wallet && proportion) {
-      allocations[ind] = { id: seq, wallet, proportion }
-      setAllocations(allocations)
+      const tempAllocations = [...allocations]
+      tempAllocations[ind] = { id: seq, wallet, proportion }
+      setAllocations(tempAllocations)
     }
   }, [wallet, proportion])
 

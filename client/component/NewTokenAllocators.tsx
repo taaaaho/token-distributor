@@ -29,15 +29,22 @@ export const NewTokenAllocators = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { errorToast } = useToaster()
 
-  const addAlocation = () => {
+  const addAllocation = () => {
     setCounter(counter + 1)
-    const allo = {
+    const newAllocation = {
       id: String(counter),
       wallet: '',
       proportion: 1,
     }
-    const tempAllo = allocations.concat(allo)
-    setAllocations(tempAllo)
+    const tempAllocations = [...allocations, newAllocation]
+    setAllocations(tempAllocations)
+  }
+
+  const deleteAllocation = (deleteId: string) => {
+    const tempAllocations = [...allocations]
+    setAllocations(
+      tempAllocations.filter((allocation) => allocation.id != deleteId)
+    )
   }
 
   const validationInput = (): boolean => {
@@ -161,11 +168,12 @@ export const NewTokenAllocators = () => {
           ind={index}
           seq={allocation.id}
           allocations={allocations}
+          deleteAllocation={deleteAllocation}
           setAllocations={setAllocations}
         />
       ))}
       <HStack justifyContent="space-between" alignItems="flex-start" mt="4">
-        <Button color="#010101" onClick={addAlocation} w="200px">
+        <Button color="#010101" onClick={addAllocation} w="200px">
           Add Allocation
         </Button>
         <FormControl
