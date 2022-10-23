@@ -44,12 +44,22 @@ export const WalletMenu: React.FC = () => {
   const { infoToast } = useToaster()
   const { onOpen, onClose, isOpen } = useDisclosure()
 
+  const loadProvider = () => {
+    const newProvider = new ethers.providers.Web3Provider(
+      (window as any).ethereum,
+      'any'
+    )
+    if (newProvider) {
+      setProvider(newProvider)
+    }
+  }
   const changeNetwork = async (chainId: string) => {
     if (provider) {
       try {
         await provider.send('wallet_switchEthereumChain', [
           { chainId: chainId },
         ])
+        loadProvider()
       } catch (switchError: any) {
         // This error code indicates that the chain has not been added to MetaMask.
         if (switchError.code === 4902) {
@@ -58,6 +68,7 @@ export const WalletMenu: React.FC = () => {
               // @ts-ignore
               CHAIN_LIST[chainId],
             ])
+            loadProvider()
           } catch (addError) {
             console.error(addError)
             // handle "add" error
@@ -80,17 +91,14 @@ export const WalletMenu: React.FC = () => {
   }, [provider, user])
 
   useEffect(() => {
-    const prov = new ethers.providers.Web3Provider(
-      (window as any).ethereum,
-      'any'
-    )
-    if (prov) {
-      setProvider(prov)
-    }
     if (provider) {
       fetchData()
     }
   }, [fetchData, provider])
+
+  useEffect(() => {
+    loadProvider()
+  }, [])
 
   return (
     <>
