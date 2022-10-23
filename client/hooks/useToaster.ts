@@ -4,10 +4,9 @@ import { useCallback } from 'react'
 export const useToaster = () => {
   const toast = useToast()
   const errorToast = useCallback(
-    (errorCode: string) => {
+    (message: string) => {
       toast({
-        title: 'Error',
-        description: errorCode,
+        title: message,
         status: 'error',
         position: 'top',
         duration: 7000,

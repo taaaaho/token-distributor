@@ -10,6 +10,7 @@ import { Allocation, TokenAllocator } from '@prisma/client'
 import { ethers } from 'ethers'
 import axios from 'axios'
 import { Loading } from './Loading'
+import { useToaster } from '@/hooks/useToaster'
 
 export const NewTokenAllocators = () => {
   const { user } = useMoralisSession()
@@ -26,6 +27,7 @@ export const NewTokenAllocators = () => {
     useState<boolean>(false)
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { errorToast } = useToaster()
 
   const addAlocation = () => {
     setCounter(counter + 1)
@@ -69,6 +71,10 @@ export const NewTokenAllocators = () => {
   const postTokenAllocators = async () => {
     setIsLoading(true)
     try {
+      if (!user) {
+        errorToast('Please Signin')
+        return
+      }
       // validation
       if (!validationInput()) {
         return
