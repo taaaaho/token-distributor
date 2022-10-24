@@ -2,7 +2,8 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { signIn } from 'next-auth/react'
 import { useAccount, useConnect, useSignMessage, useDisconnect } from 'wagmi'
 import axios from 'axios'
-import { Box, Button } from '@chakra-ui/react'
+import { Box, Button, Text } from '@chakra-ui/react'
+import Image from 'next/image'
 
 interface Props {
   buttonSize: string
@@ -45,7 +46,13 @@ const SignIn: React.FC<Props> = (props) => {
   return (
     <Box>
       <Button size={buttonSize} color="#010101" onClick={() => handleAuth()}>
-        SignIn
+        <Text mr={2}>SignIn</Text>
+        <Image
+          src="/metamask.svg"
+          width="25px"
+          height="25px"
+          alt="metamask icon"
+        />
       </Button>
     </Box>
   )
