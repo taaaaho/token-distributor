@@ -17,16 +17,22 @@ import Link from 'next/link'
 import { formatDate, getEllipsisTxt } from '@/utils/format'
 import { useMoralisSession } from '@/hooks/useMoralisSession'
 import { Loading } from './Loading'
+import { useAppContext } from '@/context/AppContext'
 
 export const TokenAllocators = () => {
   const { user } = useMoralisSession()
   const [tokenAllocators, setTokenAllocators] = useState<TokenAllocator[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { isLoading, setIsLoading } = useAppContext()
   const fetchTokenAllocators = async () => {
-    const res = await axios.get<TokenAllocator[]>(
-      `${window.origin}/api/tokenAllocators/${user.address}`
-    )
-    setTokenAllocators(res.data)
+    setIsLoading(true)
+    try {
+      const res = await axios.get<TokenAllocator[]>(
+        `${window.origin}/api/tokenAllocators/${user.address}`
+      )
+      setTokenAllocators(res.data)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -72,8 +78,6 @@ export const TokenAllocators = () => {
             </Tbody>
           </Table>
         </TableContainer>
-      ) : isLoading ? (
-        <Loading />
       ) : (
         <Box mt={4}>
           <Text>There are no data... </Text>

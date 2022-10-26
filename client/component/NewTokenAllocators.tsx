@@ -11,6 +11,7 @@ import { ethers } from 'ethers'
 import axios from 'axios'
 import { Loading } from './Loading'
 import { useToaster } from '@/hooks/useToaster'
+import { useAppContext } from '@/context/AppContext'
 
 export const NewTokenAllocators = () => {
   const { user } = useMoralisSession()
@@ -26,7 +27,7 @@ export const NewTokenAllocators = () => {
   const [isInvalidAddressError, setIsInvalidAddressError] =
     useState<boolean>(false)
 
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { isLoading, setIsLoading } = useAppContext()
   const { errorToast } = useToaster()
 
   const addAllocation = () => {
@@ -141,9 +142,6 @@ export const NewTokenAllocators = () => {
     }
   }
 
-  if (isLoading) {
-    return <Loading />
-  }
   return (
     <Stack w="100%" px={{ base: 4, md: 12 }}>
       <FormControl isRequired isInvalid={isNameError}>
