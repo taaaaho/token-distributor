@@ -40,7 +40,7 @@ export const Loading: React.FC = () => {
           '.loading span:nth-child(7)': {
             'animation-delay': '.6s',
           },
-          '@keyframes .loading': {
+          '@keyframes loading': {
             '0%': {
               opacity: '1',
             },
