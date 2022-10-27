@@ -30,6 +30,12 @@ interface Props {
 export const ViewTokenAllocations: React.FC<Props> = (props) => {
   const { tokenAllocator } = props
   const { infoToast } = useToaster()
+  const [chartPercent, setChartPercent] = useState<string>('')
+  useEffect(() => {
+    window.matchMedia && window.matchMedia('(max-device-width: 768px)').matches
+      ? setChartPercent('100%')
+      : setChartPercent('50%')
+  }, [])
 
   return (
     <Stack gap={2} px={8} pb={16}>
@@ -89,7 +95,7 @@ export const ViewTokenAllocations: React.FC<Props> = (props) => {
         Allocations
       </Text>
       <Stack alignItems="flex-start" direction={['column', 'row']}>
-        <Chart data={tokenAllocator.allocations} width="100%" />
+        <Chart data={tokenAllocator.allocations} width={chartPercent} />
         <TableContainer w={{ base: '100%', md: '70%' }}>
           <Table variant="simple">
             <Thead>
