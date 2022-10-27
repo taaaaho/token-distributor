@@ -107,9 +107,9 @@ const Home: NextPageWithLayout = () => {
           <Button
             // bgColor="blackAlpha.700"
             color="#010101"
-            fontSize="2xl"
-            px={12}
-            py={8}
+            fontSize="xl"
+            px={20}
+            py={7}
           >
             <Link href="https://app.token-distributor.xyz/">Launch App</Link>
           </Button>
