@@ -11,7 +11,7 @@ import {
 import Image from 'next/image'
 import { ReactElement } from 'react'
 import { NextPageWithLayout } from './_app'
-import AllocationImage from '../public/LP/Allocations_edit.png'
+// import AllocationImage from '../public/LP/Allocations_edit.png'
 import Link from 'next/link'
 
 const Home: NextPageWithLayout = () => {
@@ -75,7 +75,7 @@ const Home: NextPageWithLayout = () => {
         >
           <Center w={{ base: '100%', md: '40%' }}>
             <Image
-              src={AllocationImage}
+              src="/LP/Allocations_edit.png"
               width={(614 * 2) / 3}
               height={(386 * 2) / 3}
               alt="Allocation image"
