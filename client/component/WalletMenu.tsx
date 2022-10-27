@@ -31,15 +31,20 @@ import {
   GOERLI_CHAIN_ID,
   MATIC_CHAIN_ID,
   MATIC_TEST_CHAIN_ID,
+  BNB_CHAIN_ID,
+  BNB_TEST_CHAIN_ID,
 } from '@/types/Chain'
 import { copyTextToClipboard } from '@/utils/copy'
 import { useToaster } from '@/hooks/useToaster'
+import { useAppContext } from '@/context/AppContext'
 
 export const WalletMenu: React.FC = () => {
   const { user } = useMoralisSession()
   const [provider, setProvider] = useState<ethers.providers.Web3Provider>()
   const [network, setNetwork] = useState<string>()
   const [balance, setBalance] = useState<string>()
+
+  const { setIsLoading } = useAppContext()
 
   const { infoToast } = useToaster()
   const { onOpen, onClose, isOpen } = useDisclosure()
@@ -54,6 +59,7 @@ export const WalletMenu: React.FC = () => {
     }
   }
   const changeNetwork = async (chainId: string) => {
+    setIsLoading(true)
     if (provider) {
       try {
         await provider.send('wallet_switchEthereumChain', [
@@ -75,6 +81,8 @@ export const WalletMenu: React.FC = () => {
           }
         }
         // handle other "switch" errors
+      } finally {
+        setIsLoading(false)
       }
     }
   }
@@ -170,6 +178,14 @@ export const WalletMenu: React.FC = () => {
                     >
                       Polygon
                     </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        changeNetwork(BNB_CHAIN_ID)
+                        onClose()
+                      }}
+                    >
+                      Binance Smart Chain
+                    </MenuItem>
                     <MenuDivider />
                     <Text ml={1} fontWeight="semibold">
                       Testnet
@@ -189,6 +205,14 @@ export const WalletMenu: React.FC = () => {
                       }}
                     >
                       Mumbai
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        changeNetwork(BNB_TEST_CHAIN_ID)
+                        onClose()
+                      }}
+                    >
+                      Binance Smart Chain Test
                     </MenuItem>
                   </MenuList>
                 </Menu>
