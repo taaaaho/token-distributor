@@ -2,11 +2,11 @@ import next from 'next'
 import { NextResponse, NextRequest } from 'next/server'
 
 export default function middleware(req: {
-  nextUrl: { pathname: any; search: string; origin: string }
+  nextUrl: { pathname: any; origin: string }
   headers: { get: (arg0: string) => string }
 }) {
   // console.log(req.nextUrl)
-  const { pathname, origin, search } = req.nextUrl
+  const { pathname, origin } = req.nextUrl
   const hostname: string = req.headers.get('host')
 
   if (
@@ -20,7 +20,8 @@ export default function middleware(req: {
   if (
     hostname.indexOf('app') != -1 ||
     pathname.indexOf('/favicons') != -1 ||
-    pathname.indexOf('/LP') != -1
+    pathname.indexOf('/LP') != -1 ||
+    pathname.indexOf('/_next') != -1
   ) {
     NextResponse.next()
     return
