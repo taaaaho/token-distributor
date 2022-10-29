@@ -9,6 +9,8 @@ const Layout = ({ children }: { children: ReactElement }) => {
       <Head>
         <title>Token Distributor</title>
         <meta property="og:title" content="Token Distributor" key="title" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <meta property="og:image" content="/ogp.png" />
       </Head>
       <Box
         // backgroundImage={'LP/back.jpg'}
