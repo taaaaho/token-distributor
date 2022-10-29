@@ -6,9 +6,9 @@ const Layout = ({ children }: { children: ReactElement }) => {
   return (
     <Box minH="100%" position="relative" pt={18} bgColor="black">
       <Box
-        backgroundImage={'LP/back.jpg'}
-        backgroundPosition="center"
-        backgroundSize="cover"
+        // backgroundImage={'LP/back.jpg'}
+        // backgroundPosition="center"
+        // backgroundSize="cover"
         backgroundColor="black"
       >
         <HStack
