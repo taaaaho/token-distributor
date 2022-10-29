@@ -33,30 +33,3 @@ model Allocation {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 }
-
-
-// Whitelist Manager
-model User {
-  id        String  @id @default(cuid())
-  name      String?
-  email     String
-  projects  ProjectsOnUsers[]
-  createdAt DateTime  @default(now())
-  updatetAt DateTime  @updatedAt
-}
-
-model Project {
-  id        Int  @id @default(autoincrement())
-  name      String
-  users     ProjectsOnUsers[]
-}
-
-model ProjectsOnUsers {
-  user        User    @relation(fields: [userId], references: [id])
-  userId      String
-  project     Project @relation(fields: [projectId], references: [id])
-  projectId   Int
-  assignedAt  DateTime  @default(now())
-  assignedBy  String
-  @@id([userId, projectId])
-}

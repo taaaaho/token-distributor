@@ -1,4 +1,4 @@
-export interface UserInterface {
+export type User = {
   address: string
   profileId: string
   expirationTime: string

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, HStack, Input, Stack, Text } from '@chakra-ui/react'
+import { Input, Stack, Text } from '@chakra-ui/react'
 
 import {
   Table,

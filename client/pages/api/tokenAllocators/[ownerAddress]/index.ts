@@ -13,18 +13,22 @@ export default async function handler(
   const token = await getToken({ req, raw: true })
 
   if (token) {
-    switch (method) {
-      case 'GET':
-        const tokenAllocators = await prisma.tokenAllocator.findMany({
-          where: {
-            owner: ownerAddress,
-          },
-        })
-        res.status(200).json(tokenAllocators)
-        break
-      default:
-        res.setHeader('Allow', ['GET'])
-        res.status(405).end(`Method ${method} Not Allowed`)
+    try {
+      switch (method) {
+        case 'GET':
+          const tokenAllocators = await prisma.tokenAllocator.findMany({
+            where: {
+              owner: ownerAddress,
+            },
+          })
+          res.status(200).json(tokenAllocators)
+          break
+        default:
+          res.setHeader('Allow', ['GET'])
+          res.status(405).end(`Method ${method} Not Allowed`)
+      }
+    } catch (e: any) {
+      res.status(500).end(`Something went wrong... ${e.message}`)
     }
   } else {
     res.status(400).end(`Not Authorized`)

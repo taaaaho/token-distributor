@@ -14,7 +14,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // const { address, chain, network } = req.body
   const network = JSON.parse(req.body).network
   const address = JSON.parse(req.body).address as string
   const chain = JSON.parse(req.body).chain

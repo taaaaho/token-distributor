@@ -12,34 +12,38 @@ export default async function handler(
   const token = await getToken({ req, raw: true })
 
   if (token) {
-    switch (method) {
-      case 'GET':
-        const tokenAllocators = await prisma.tokenAllocator.findMany({})
-        res.status(200).json(tokenAllocators)
-        break
-      case 'POST':
-        const { network, name, description, owner, contract, allocations } =
-          req.body
+    try {
+      switch (method) {
+        case 'GET':
+          const tokenAllocators = await prisma.tokenAllocator.findMany({})
+          res.status(200).json(tokenAllocators)
+          break
+        case 'POST':
+          const { network, name, description, owner, contract, allocations } =
+            req.body
 
-        const tokenAllocator = await prisma.tokenAllocator.create({
-          data: {
-            name,
-            network,
-            description,
-            owner,
-            contract,
-            allocations: {
-              createMany: {
-                data: allocations,
+          const tokenAllocator = await prisma.tokenAllocator.create({
+            data: {
+              name,
+              network,
+              description,
+              owner,
+              contract,
+              allocations: {
+                createMany: {
+                  data: allocations,
+                },
               },
             },
-          },
-        })
-        res.status(200).json(tokenAllocator)
-        break
-      default:
-        res.setHeader('Allow', ['GET', 'POST'])
-        res.status(405).end(`Method ${method} Not Allowed`)
+          })
+          res.status(200).json(tokenAllocator)
+          break
+        default:
+          res.setHeader('Allow', ['GET', 'POST'])
+          res.status(405).end(`Method ${method} Not Allowed`)
+      }
+    } catch (e: any) {
+      res.status(500).end(`Something went wrong... ${e.message}`)
     }
   } else {
     res.status(400).end(`Not Authorized`)

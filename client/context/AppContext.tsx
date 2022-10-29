@@ -1,4 +1,3 @@
-// import { ethers } from 'ethers'
 import {
   createContext,
   Dispatch,
@@ -11,10 +10,6 @@ import {
 type Context = {
   isLoading: boolean
   setIsLoading: Dispatch<SetStateAction<boolean>>
-  // provider: ethers.providers.Web3Provider | undefined
-  // setProvider: Dispatch<
-  //   SetStateAction<ethers.providers.Web3Provider | undefined>
-  // >
 }
 const AppContext = createContext({} as Context)
 
@@ -25,7 +20,6 @@ type Props = {
 const AppProvider: React.FC<Props> = (props) => {
   const { children } = props
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  // const [provider, setProvider] = useState<ethers.providers.Web3Provider>()
   {
     return (
       <AppContext.Provider value={{ isLoading, setIsLoading }}>

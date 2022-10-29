@@ -9,7 +9,6 @@ import { NewAllocation } from './NewAllocation'
 import { Allocation, TokenAllocator } from '@prisma/client'
 import { ethers } from 'ethers'
 import axios from 'axios'
-import { Loading } from './Loading'
 import { useToaster } from '@/hooks/useToaster'
 import { useAppContext } from '@/context/AppContext'
 
@@ -27,7 +26,7 @@ export const NewTokenAllocators = () => {
   const [isInvalidAddressError, setIsInvalidAddressError] =
     useState<boolean>(false)
 
-  const { isLoading, setIsLoading } = useAppContext()
+  const { setIsLoading } = useAppContext()
   const { errorToast } = useToaster()
 
   const addAllocation = () => {

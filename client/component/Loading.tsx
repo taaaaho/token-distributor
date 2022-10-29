@@ -1,4 +1,4 @@
-import { Spinner, Text, Center, VStack } from '@chakra-ui/react'
+import { Spinner, Center, VStack } from '@chakra-ui/react'
 
 export const Loading: React.FC = () => {
   return (
@@ -51,9 +51,6 @@ export const Loading: React.FC = () => {
         }}
       >
         <Spinner size="lg" color="white" />
-        {/* <Text fontSize="xl" letterSpacing={3} fontWeight="bold" color="white">
-          Loading...
-        </Text> */}
         <div className="loading">
           <span>L</span>
           <span>O</span>

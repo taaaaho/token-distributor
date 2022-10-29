@@ -19,14 +19,6 @@ const config: HardhatUserConfig = {
   },
   networks: {
     hardhat: {},
-    rinkeby: {
-      url: `${process.env.INFURA_RINKEBY}`,
-      accounts: [process.env.PRIVATE_KEY as string],
-    },
-    ropsten: {
-      url: `${process.env.INFURA_ROPSTEN}`,
-      accounts: [process.env.PRIVATE_KEY as string],
-    },
     goerli: {
       url: `${process.env.ALCHEMY_GOERLI}`,
       accounts: [process.env.PRIVATE_KEY as string],

@@ -33,7 +33,7 @@ import {
   MATIC_TEST_CHAIN_ID,
   BNB_CHAIN_ID,
   BNB_TEST_CHAIN_ID,
-} from '@/types/Chain'
+} from '@/constants/Chain'
 import { copyTextToClipboard } from '@/utils/copy'
 import { useToaster } from '@/hooks/useToaster'
 import { useAppContext } from '@/context/AppContext'

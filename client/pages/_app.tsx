@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app'
 import { Session } from 'next-auth'
 import { ChakraProvider } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import { ReactElement, ReactNode, useEffect, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 
 // Authentication
 import {
@@ -13,7 +13,7 @@ import {
 } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { SessionProvider } from 'next-auth/react'
-import AppProvider, { useAppContext } from '@/context/AppContext'
+import AppProvider from '@/context/AppContext'
 import { useRouter } from 'next/router'
 import { Loading } from '@/component/Loading'
 
@@ -43,7 +43,6 @@ function MyApp({
   pageProps: { session, ...pageProps },
 }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page)
-  const { setIsLoading } = useAppContext()
 
   const router = useRouter()
   const [pageLoading, setPageLoading] = useState(false)

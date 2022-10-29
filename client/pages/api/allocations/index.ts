@@ -13,19 +13,23 @@ export default async function handler(
   const token = await getToken({ req, raw: true })
 
   if (token) {
-    switch (method) {
-      case 'GET':
-        const tokenAllocator = await fetchData(tid)
-        if (tokenAllocator) {
-          res.status(200).json(tokenAllocator)
-        } else {
-          res.status(400).end('Not Found')
-        }
+    try {
+      switch (method) {
+        case 'GET':
+          const tokenAllocator = await fetchData(tid)
+          if (tokenAllocator) {
+            res.status(200).json(tokenAllocator)
+          } else {
+            res.status(400).end('Not Found')
+          }
 
-        break
-      default:
-        res.setHeader('Allow', ['GET'])
-        res.status(405).end(`Method ${method} Not Allowed`)
+          break
+        default:
+          res.setHeader('Allow', ['GET'])
+          res.status(405).end(`Method ${method} Not Allowed`)
+      }
+    } catch (e: any) {
+      res.status(500).end(`Something went wrong... ${e.message}`)
     }
   } else {
     res.status(400).end(`Not Authorized`)

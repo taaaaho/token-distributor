@@ -16,7 +16,6 @@ import {
 import Link from 'next/link'
 import { formatDate, getEllipsisTxt } from '@/utils/format'
 import { useMoralisSession } from '@/hooks/useMoralisSession'
-import { Loading } from './Loading'
 import { useAppContext } from '@/context/AppContext'
 
 export const TokenAllocators = () => {
