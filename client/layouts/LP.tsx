@@ -1,10 +1,15 @@
 import { Box, Button, Center, HStack, Text } from '@chakra-ui/react'
+import Head from 'next/head'
 import Link from 'next/link'
 import type { ReactElement } from 'react'
 
 const Layout = ({ children }: { children: ReactElement }) => {
   return (
     <Box minH="100%" position="relative" pt={18} bgColor="black">
+      <Head>
+        <title>Token Distributor</title>
+        <meta property="og:title" content="Token Distributor" key="title" />
+      </Head>
       <Box
         // backgroundImage={'LP/back.jpg'}
         // backgroundPosition="center"

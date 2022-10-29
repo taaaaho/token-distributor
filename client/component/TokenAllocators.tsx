@@ -43,10 +43,10 @@ export const TokenAllocators = () => {
           isLoading={isLoading}
           isDisabled={isLoading}
         >
-          Fetch
+          Show your contracts
         </Button>
         <Link href="/tokenAllocator/new">
-          <Button color="#010101">New</Button>
+          <Button color="#010101">Create contract</Button>
         </Link>
       </HStack>
       {tokenAllocators.length > 0 ? (
