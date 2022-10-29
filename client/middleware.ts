@@ -9,12 +9,19 @@ export default function middleware(req: {
   const { pathname, origin, search } = req.nextUrl
   const hostname: string = req.headers.get('host')
 
-  if (req.nextUrl.origin == 'http://localhost:3000') {
+  if (
+    req.nextUrl.origin == 'http://localhost:3000' ||
+    req.nextUrl.origin == 'http://localhost:3001'
+  ) {
     NextResponse.next()
     return
   }
 
-  if (hostname.indexOf('app') != -1) {
+  if (
+    hostname.indexOf('app') != -1 ||
+    pathname.indexOf('/favicons') != -1 ||
+    pathname.indexOf('/LP') != -1
+  ) {
     NextResponse.next()
     return
   }
