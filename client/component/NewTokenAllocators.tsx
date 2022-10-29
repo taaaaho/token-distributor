@@ -11,9 +11,11 @@ import { ethers } from 'ethers'
 import axios from 'axios'
 import { useToaster } from '@/hooks/useToaster'
 import { useAppContext } from '@/context/AppContext'
+import { useRouter } from 'next/router'
 
 export const NewTokenAllocators = () => {
   const { user } = useMoralisSession()
+  const router = useRouter()
   const [name, setName] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [allocations, setAllocations] = useState<
@@ -27,7 +29,7 @@ export const NewTokenAllocators = () => {
     useState<boolean>(false)
 
   const { setIsLoading } = useAppContext()
-  const { errorToast } = useToaster()
+  const { errorToast, successToast } = useToaster()
 
   const addAllocation = () => {
     setCounter(counter + 1)
@@ -136,6 +138,8 @@ export const NewTokenAllocators = () => {
         data
       )
       setAllocations([])
+      successToast('Contract is created')
+      router.push('/')
     } finally {
       setIsLoading(false)
     }

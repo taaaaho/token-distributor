@@ -19,8 +19,7 @@ export const useToaster = () => {
   const successToast = useCallback(
     (message: string) => {
       toast({
-        title: 'Success',
-        description: message,
+        title: message,
         status: 'success',
         position: 'top',
         duration: 7000,
