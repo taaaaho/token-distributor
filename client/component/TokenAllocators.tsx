@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button, HStack, Text } from '@chakra-ui/react'
 import axios from 'axios'
 import { TokenAllocator } from '@prisma/client'
@@ -17,6 +17,7 @@ import Link from 'next/link'
 import { formatDate, getEllipsisTxt } from '@/utils/format'
 import { useMoralisSession } from '@/hooks/useMoralisSession'
 import { useAppContext } from '@/context/AppContext'
+import { RepeatIcon } from '@chakra-ui/icons'
 
 export const TokenAllocators = () => {
   const { user } = useMoralisSession()
@@ -34,20 +35,24 @@ export const TokenAllocators = () => {
     }
   }
 
+  useEffect(() => {
+    fetchTokenAllocators()
+  }, [user])
+
   return (
     <Box w="100%" px={{ base: 4, md: 12 }}>
-      <HStack justifyContent="space-between">
+      <HStack justifyContent="flex-start">
+        <Link href="/tokenAllocator/new">
+          <Button color="#010101">Create contract</Button>
+        </Link>
         <Button
           color="#010101"
           onClick={fetchTokenAllocators}
           isLoading={isLoading}
           isDisabled={isLoading}
         >
-          Show your contracts
+          <RepeatIcon />
         </Button>
-        <Link href="/tokenAllocator/new">
-          <Button color="#010101">Create contract</Button>
-        </Link>
       </HStack>
       {tokenAllocators.length > 0 ? (
         <TableContainer w="100%">
