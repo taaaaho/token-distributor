@@ -112,7 +112,7 @@ export const WalletMenu: React.FC = () => {
     <>
       <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
         <PopoverTrigger>
-          <Button size="sm" color="#010101">
+          <Button size={{ base: 'xs', md: 'sm' }} color="#010101">
             <Text mr={2}>{getEllipsisTxt(user.address, 4)}</Text>
             <Image
               src="/metamask.svg"

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Input, Stack, Text } from '@chakra-ui/react'
+import { HStack, Input, Stack, Text } from '@chakra-ui/react'
 
 import {
   Table,
@@ -17,8 +17,10 @@ import { Allocation, TokenAllocator } from '@prisma/client'
 import { capitalize, formatDate } from '@/utils/format'
 import Chart from './Chart'
 import { copyTextToClipboard } from '@/utils/copy'
-import { CopyIcon } from '@chakra-ui/icons'
+import { CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 import { useToaster } from '@/hooks/useToaster'
+import Link from 'next/link'
+import { blockExplorer } from '@/constants/BlockExproler'
 
 interface Props {
   tokenAllocator:
@@ -66,17 +68,35 @@ export const ViewTokenAllocations: React.FC<Props> = (props) => {
         />
       </FormControl>
       <FormControl>
-        <FormLabel
-          cursor="pointer"
-          onClick={async () => {
-            const res = await copyTextToClipboard(tokenAllocator.contract)
-            if (res) {
-              infoToast('Copied!')
-            }
-          }}
-        >
-          Contract Address
-          <CopyIcon />
+        <FormLabel>
+          <HStack justifyContent="space-between">
+            <HStack
+              cursor="pointer"
+              onClick={async () => {
+                const res = await copyTextToClipboard(tokenAllocator.contract)
+                if (res) {
+                  infoToast('Copied!')
+                }
+              }}
+            >
+              <Text>Contract Address</Text>
+              <CopyIcon />
+            </HStack>
+            <Link
+              passHref
+              href={
+                tokenAllocator.network
+                  ? blockExplorer[tokenAllocator.network] +
+                    tokenAllocator.contract
+                  : ''
+              }
+            >
+              <a target="_blank" rel="noopener noreferrer" color="white">
+                {`Blockexplorer  `}
+                <ExternalLinkIcon />
+              </a>
+            </Link>
+          </HStack>
         </FormLabel>
         <Input
           defaultValue={tokenAllocator.contract}
