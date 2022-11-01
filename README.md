@@ -2,6 +2,10 @@
 
 This repository contains the smart contract and frontend codes.
 
+It is now live at the following URL.
+
+https://token-distributor.xyz/
+
 ## Purpose
 
 This service simplifies and makes transparent the distribution of rewards.
@@ -23,3 +27,35 @@ TOKEN DISTRIBUTOR allows the definition of the recipient and percentage of distr
 - The owner can distribute the money by sending money to the contract address that is issued after deployment.
 - After deployment, the settings and distribution ratio can be visually confirmed on the Web service.
 - To prevent human error, the system automatically checks the address and whether the distribution ratio is 100% in total.
+
+![Create your own distribution contract](images/1.png)
+
+![Additional Useful Functions](images/2.png)
+
+## How to use
+
+![How to use & How it work](images/3.png)
+
+## Technology Stacks
+
+The following technologies are used.
+
+![Architecture](images/4.png)
+
+**Frontend**
+
+- Next.js
+- Typescript
+- ChakraUI
+- ethersjs
+- prisma
+- PlantScale
+- Moralis
+
+**Contract**
+
+- Hardhat
+
+**Server**
+
+- Vercel
