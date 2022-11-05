@@ -14,8 +14,7 @@ import {
 import { publicProvider } from 'wagmi/providers/public'
 import { SessionProvider } from 'next-auth/react'
 import AppProvider from '@/context/AppContext'
-import { useRouter } from 'next/router'
-import { Loading } from '@/component/Loading'
+import { TransitionLoading } from '@/component/TransitionLoading'
 
 const { provider, webSocketProvider } = configureChains(defaultChains, [
   publicProvider(),
@@ -44,30 +43,12 @@ function MyApp({
 }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page)
 
-  const router = useRouter()
-  const [pageLoading, setPageLoading] = useState(false)
-  useEffect(() => {
-    const handleStart = (url: any) =>
-      url !== router.asPath && setPageLoading(true)
-    const handleComplete = () => setPageLoading(false)
-
-    router.events.on('routeChangeStart', handleStart)
-    router.events.on('routeChangeComplete', handleComplete)
-    router.events.on('routeChangeError', handleComplete)
-
-    return () => {
-      router.events.off('routeChangeStart', handleStart)
-      router.events.off('routeChangeComplete', handleComplete)
-      router.events.off('routeChangeError', handleComplete)
-    }
-  })
-
   return (
     <WagmiConfig client={client}>
       <SessionProvider session={session} refetchInterval={0}>
         <AppProvider>
           <ChakraProvider>
-            {pageLoading && <Loading />}
+            <TransitionLoading />
             {getLayout(<Component {...pageProps} />)}
           </ChakraProvider>
         </AppProvider>
