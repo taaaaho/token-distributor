@@ -44,17 +44,20 @@ The following technologies are used.
 
 **Frontend**
 
-- Next.js
+- Next.js(React)
 - Typescript
-- ChakraUI
+- Chakra UI
 - ethersjs
 - prisma
-- PlantScale
 - Moralis
 
 **Contract**
 
 - Hardhat
+
+**Databaes**
+
+- PlantScale
 
 **Server**
 
